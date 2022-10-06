@@ -51,10 +51,8 @@ const getMovies = async (req, res, next) => {
 };
 
 const deleteMovie = async (req, res, next) => {
-  const { movieId } = req.params;
-
   try {
-    const movie = await Movie.findById(movieId);
+    const movie = await Movie.findById(req.params._id);
     if (!movie) {
       throw new ErrorNotFound('Карточка не найдена');
     }

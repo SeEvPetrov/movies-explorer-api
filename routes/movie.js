@@ -52,4 +52,4 @@ movieRoutes.delete(
   deleteMovie,
 );
 
-module.exports = movieRoutes;
+module.exports = { movieRoutes };

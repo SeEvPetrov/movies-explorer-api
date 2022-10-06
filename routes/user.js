@@ -22,4 +22,4 @@ userRoutes.patch(
   updateUserInfo,
 );
 
-module.exports = userRoutes;
+module.exports = { userRoutes };
