@@ -3,7 +3,6 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 const helmet = require('helmet');
 
@@ -17,7 +16,6 @@ const { routes } = require('./routes');
 const { errorhandler } = require('./middlewares/errorHandler');
 
 app.use(helmet());
-app.use(cookieParser());
 app.use(cors());
 
 app.use(requestLogger);
