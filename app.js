@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 const helmet = require('helmet');
 
-const { PORT, DATABASE_URL } = require('./utils/config');
+const { PORT, DATABASE_URL, limiter } = require('./utils/config');
 
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
@@ -15,6 +15,7 @@ const { routes } = require('./routes');
 const { errorhandler } = require('./middlewares/errorHandler');
 
 app.use(helmet());
+app.use(limiter);
 app.use(cors());
 
 app.use(requestLogger);
