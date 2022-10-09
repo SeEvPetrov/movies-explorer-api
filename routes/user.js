@@ -1,5 +1,5 @@
 const express = require('express');
-const { celebrate, Joi } = require('celebrate');
+const { updateUserValidation } = require('../middlewares/reqValidator');
 
 const userRoutes = express.Router();
 const {
@@ -11,14 +11,7 @@ userRoutes.get('/me', getUserMe);
 
 userRoutes.patch(
   '/me',
-  express.json(),
-  celebrate({
-    body: Joi.object().keys({
-      email: Joi.string().required().email(),
-      name: Joi.string().required().min(2).max(30),
-    }),
-  }),
-
+  updateUserValidation,
   updateUserInfo,
 );
 

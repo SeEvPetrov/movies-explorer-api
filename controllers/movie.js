@@ -4,6 +4,7 @@ const {
   ForbiddenError,
   customError,
 } = require('../errors/index');
+const { ERROR_MESSAGES } = require('../utils/errorsConstants');
 
 const createMovie = async (req, res, next) => {
   const {
@@ -54,10 +55,10 @@ const deleteMovie = async (req, res, next) => {
   try {
     const movie = await Movie.findById(req.params._id);
     if (!movie) {
-      throw new ErrorNotFound('Карточка не найдена');
+      throw new ErrorNotFound(ERROR_MESSAGES.MOVIE_NOT_FOUND);
     }
     if (req.user._id !== movie.owner.toString()) {
-      next(new ForbiddenError('Чужую карточку не удалить'));
+      next(new ForbiddenError(ERROR_MESSAGES.FORBIDDEN));
       return;
     }
     await movie.remove();

@@ -7,6 +7,7 @@ const {
   AuthorizationError,
   customError,
 } = require('../errors/index');
+const { ERROR_MESSAGES } = require('../utils/errorsConstants');
 
 const createUser = async (req, res, next) => {
   const {
@@ -30,7 +31,7 @@ const getUserMe = async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id);
     if (!user) {
-      throw new ErrorNotFound('Пользователь не найден');
+      throw new ErrorNotFound(ERROR_MESSAGES.USER_NOT_FOUND);
     }
     res.status(200).send(user);
   } catch (err) {
@@ -48,7 +49,7 @@ const updateUserInfo = async (req, res, next) => {
       { new: true, runValidators: true },
     );
     if (!user) {
-      throw new ErrorNotFound('Пользователь не найден');
+      throw new ErrorNotFound(ERROR_MESSAGES.USER_NOT_FOUND);
     }
     res.status(200).send(user);
   } catch (err) {
@@ -62,11 +63,11 @@ const login = async (req, res, next) => {
   try {
     const user = await User.findOne({ email }).select('+password');
     if (!user) {
-      throw new AuthorizationError('Неправильный логин или пароль');
+      throw new AuthorizationError(ERROR_MESSAGES.WRONG_CREDENTIALS);
     }
     const isUserValid = await bcrypt.compare(password, user.password);
     if (!isUserValid) {
-      throw new AuthorizationError('Неправильный логин или пароль');
+      throw new AuthorizationError(ERROR_MESSAGES.WRONG_CREDENTIALS);
     }
     const token = jwt.sign(
       {
